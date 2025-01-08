@@ -20,6 +20,7 @@ class _BuyFullKitState extends State<BuyFullKit> {
   bool _isCopied = false;
   final Uri _url = Uri.parse(
       'https://app.gumroad.com/checkout?_gl=1*1j1owy*_ga*Nzc0MTA1NTYwLjE3MjAwMTA3MzM.*_ga_6LJN6D94N6*MTcyMDA0MjQzMC41LjEuMTcyMDA0MjQzMS4wLjAuMA..&product=uxznc&option=B3wWhE6QH46cfm31C7jEmQ%3D%3D&quantity=1&referrer=App');
+
   Future<void> buyLink() async {
     if (!await launchUrl(_url)) {
       throw Exception('Could not launch $_url');
@@ -61,11 +62,13 @@ class _BuyFullKitState extends State<BuyFullKit> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the primary color from the theme
+    final Color primaryColor = Theme.of(context).primaryColor;
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Image.asset("assets/screens/Forgot_password.png"),
           PageView.builder(
             controller: _pageController,
             itemCount: widget.images.length,
@@ -87,7 +90,8 @@ class _BuyFullKitState extends State<BuyFullKit> {
                     color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: primaryColor.withOpacity(0.4),
+                      color: primaryColor
+                          .withOpacity(0.4), // Adjusted transparency
                     ),
                     boxShadow: [
                       BoxShadow(
@@ -129,13 +133,12 @@ class _BuyFullKitState extends State<BuyFullKit> {
                                   });
                                 });
                               },
-                              // child: Text("Get full kit"),
                               label:
-                                  Text(_isCopied ? "Link Copyed" : "Copy link"),
+                                  Text(_isCopied ? "Link Copied" : "Copy link"),
                               icon: SvgPicture.asset(
                                 "assets/icons/world_map.svg",
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
+                                colorFilter: ColorFilter.mode(
+                                  primaryColor,
                                   BlendMode.srcIn,
                                 ),
                               ),
@@ -144,19 +147,14 @@ class _BuyFullKitState extends State<BuyFullKit> {
                           const SizedBox(width: defaultPadding),
                           Expanded(
                             child: OutlinedButton.icon(
-                              onPressed: () async {
-                                buyLink();
-                              },
-                              // child: Text("Get full kit"),
+                              onPressed: buyLink,
                               label: const Text("Get full code"),
                               icon: SvgPicture.asset(
                                 "assets/icons/Bag.svg",
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter: ColorFilter.mode(
                                   primaryColor,
                                   BlendMode.srcIn,
                                 ),
-                                // height: 24,
-                                // width: 24,
                               ),
                             ),
                           ),
