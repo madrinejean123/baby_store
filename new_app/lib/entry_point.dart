@@ -46,7 +46,7 @@ class _EntryPointState extends State<EntryPoint> {
         leadingWidth: 0,
         centerTitle: false,
         title: SvgPicture.asset(
-          "assets/logo/Shoplon.svg",
+          "assets/logo/image.png",
           colorFilter: ColorFilter.mode(
               Theme.of(context).iconTheme.color!, BlendMode.srcIn),
           height: 20,
@@ -94,7 +94,7 @@ class _EntryPointState extends State<EntryPoint> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.only(top: defaultPadding / 2),
         color: Theme.of(context).brightness == Brightness.light
-            ? Colors.white
+            ? const Color.fromARGB(255, 199, 148, 148)
             : const Color(0xFF101015),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,

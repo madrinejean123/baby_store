@@ -19,9 +19,6 @@ void main() async {
   runApp(MyApp(analytics: analytics)); // Pass analytics as a named parameter
 }
 
-// Thanks for using our template. You are using the free version of the template.
-// 🔗 Full template: https://theflutterway.gumroad.com/l/fluttershop
-
 class MyApp extends StatelessWidget {
   // Constructor accepts FirebaseAnalytics instance as a parameter
   const MyApp({super.key, required this.analytics});
@@ -37,7 +34,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Shop Template by The Flutter Way',
+      title: 'Shop baby clothes',
       theme: AppTheme.lightTheme(context),
       themeMode: ThemeMode.light,
       onGenerateRoute: router.generateRoute,

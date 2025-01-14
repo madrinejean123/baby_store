@@ -19,11 +19,12 @@ class _LoginScreenState extends State<LoginScreen> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 138, 185, 199),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Image.asset(
-              "assets/images/login_dark.png",
+              "assets/images/image.png",
               fit: BoxFit.cover,
             ),
             Padding(
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: defaultPadding / 2),
                   const Text(
-                    "Log in with your data that you intered during your registration.",
+                    "Log in with your data that you entered during your registration.",
                   ),
                   const SizedBox(height: defaultPadding),
                   LogInForm(formKey: _formKey),
@@ -51,9 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height > 700
-                        ? size.height * 0.1
-                        : defaultPadding,
+                    height:
+                        size.height > 700 ? size.height * 0.1 : defaultPadding,
                   ),
                   ElevatedButton(
                     onPressed: () {

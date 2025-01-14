@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../components/buy_full_ui_kit.dart';
+import 'package:shop/components/buy_full_ui_kit.dart';
 
 class PasswordRecoveryScreen extends StatelessWidget {
   const PasswordRecoveryScreen({super.key});
@@ -8,7 +7,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const BuyFullKit(images: [
-      "assets/screens/Forgot_password.png",
+      "assets/images/image copy.png",
       "assets/screens/Forgot password 6.png",
       "assets/screens/Enter verification code.png",
       "assets/screens/Verificaition code.png",

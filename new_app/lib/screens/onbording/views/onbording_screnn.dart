@@ -18,38 +18,28 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
   int _pageIndex = 0;
   final List<Onbord> _onbordData = [
     Onbord(
-      image: "assets/Illustration/Illustration-0.png",
-      imageDarkTheme: "assets/Illustration/Illustration_darkTheme_0.png",
-      title: "Find the item you’ve \nbeen looking for",
+      image: "assets/Illustration/baby_clothes_1.png",
+      title: "Discover Adorable Baby Clothes",
       description:
-          "Here you’ll see rich varieties of goods, carefully classified for seamless browsing experience.",
+          "Explore a charming collection of baby clothes perfect for your little one, crafted with love and care.",
     ),
     Onbord(
-      image: "assets/Illustration/Illustration-1.png",
-      imageDarkTheme: "assets/Illustration/Illustration_darkTheme_1.png",
-      title: "Get those shopping \nbags filled",
+      image: "assets/Illustration/baby_clothes_2.png",
+      title: "Shop Cozy Outfits",
       description:
-          "Add any item you want to your cart, or save it on your wishlist, so you don’t miss it in your future purchases.",
+          "Find soft and comfortable outfits designed to keep your baby warm and stylish all day long.",
     ),
     Onbord(
-      image: "assets/Illustration/Illustration-2.png",
-      imageDarkTheme: "assets/Illustration/Illustration_darkTheme_2.png",
-      title: "Fast & secure \npayment",
-      description: "There are many payment options available for your ease.",
+      image: "assets/Illustration/baby_clothes_3.png",
+      title: "Quality You Can Trust",
+      description:
+          "Our clothes are made from premium fabrics, ensuring quality, safety, and durability for your baby.",
     ),
     Onbord(
-      image: "assets/Illustration/Illustration-3.png",
-      imageDarkTheme: "assets/Illustration/Illustration_darkTheme_3.png",
-      title: "Package tracking",
+      image: "assets/Illustration/baby_clothes_4.png",
+      title: "Fast & Easy Delivery",
       description:
-          "In particular, Shoplon can pack your orders, and help you seamlessly manage your shipments.",
-    ),
-    Onbord(
-      image: "assets/Illustration/Illustration-4.png",
-      imageDarkTheme: "assets/Illustration/Illustration_darkTheme_4.png",
-      title: "Nearby stores",
-      description:
-          "Easily track nearby shops, browse through their items and get information about their prodcuts.",
+          "Enjoy quick and reliable delivery options to get your baby's outfits delivered right to your doorstep.",
     ),
   ];
 
@@ -68,6 +58,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFFF0F5), // Soft baby pink background
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
@@ -98,10 +89,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                   itemBuilder: (context, index) => OnbordingContent(
                     title: _onbordData[index].title,
                     description: _onbordData[index].description,
-                    image: (Theme.of(context).brightness == Brightness.dark &&
-                            _onbordData[index].imageDarkTheme != null)
-                        ? _onbordData[index].imageDarkTheme!
-                        : _onbordData[index].image,
+                    image: _onbordData[index].image,
                     isTextOnTop: index.isOdd,
                   ),
                 ),
@@ -130,11 +118,12 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const CircleBorder(),
+                        backgroundColor: Colors.pinkAccent,
                       ),
                       child: SvgPicture.asset(
-                        "assets/icons/Arrow - Right.svg",
+                        "assets/icons/image.png",
                         colorFilter: const ColorFilter.mode(
-                          Colors.white,
+                          Color.fromARGB(255, 243, 164, 207),
                           BlendMode.srcIn,
                         ),
                       ),
@@ -153,12 +142,10 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
 
 class Onbord {
   final String image, title, description;
-  final String? imageDarkTheme;
 
   Onbord({
     required this.image,
     required this.title,
     this.description = "",
-    this.imageDarkTheme,
   });
 }

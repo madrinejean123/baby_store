@@ -22,10 +22,12 @@ List<CategoryModel> demoCategories = [
       name: "On Sale",
       svgSrc: "assets/icons/Sale.svg",
       route: onSaleScreenRoute),
-  CategoryModel(name: "Man's", svgSrc: "assets/icons/Man.svg"),
-  CategoryModel(name: "Woman’s", svgSrc: "assets/icons/Woman.svg"),
+  CategoryModel(name: "Baby_clothes", svgSrc: "assets/icons/Man.svg"),
+  CategoryModel(name: "bedroom_essentials", svgSrc: "assets/icons/Woman.svg"),
   CategoryModel(
-      name: "Kids", svgSrc: "assets/icons/Child.svg", route: kidsScreenRoute),
+      name: "baby_furniture",
+      svgSrc: "assets/images/image.png",
+      route: kidsScreenRoute),
 ];
 // End For Preview
 

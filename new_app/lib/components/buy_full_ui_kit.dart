@@ -62,7 +62,6 @@ class _BuyFullKitState extends State<BuyFullKit> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the primary color from the theme
     final Color primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
@@ -90,8 +89,7 @@ class _BuyFullKitState extends State<BuyFullKit> {
                     color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: primaryColor
-                          .withOpacity(0.4), // Adjusted transparency
+                      color: primaryColor.withOpacity(0.4),
                     ),
                     boxShadow: [
                       BoxShadow(
@@ -148,7 +146,7 @@ class _BuyFullKitState extends State<BuyFullKit> {
                           Expanded(
                             child: OutlinedButton.icon(
                               onPressed: buyLink,
-                              label: const Text("Get full code"),
+                              label: const Text("Purchase Full Kit"),
                               icon: SvgPicture.asset(
                                 "assets/icons/Bag.svg",
                                 colorFilter: ColorFilter.mode(
