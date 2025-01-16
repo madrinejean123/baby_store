@@ -205,9 +205,9 @@ class _OnSaleScreenState extends State<OnSaleScreen> {
                               const SizedBox(height: 5),
                               ElevatedButton(
                                 onPressed: addToCart,
-                                child: const Text('Add to Cart'),
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.tealAccent),
+                                child: const Text('Add to Cart'),
                               ),
                             ],
                           ),
