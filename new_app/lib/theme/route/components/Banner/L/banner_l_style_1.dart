@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'package:shop/components/Banner/L/banner_l.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/route/components/Banner/L/banner_l.dart';
 
 class BannerLStyle1 extends StatelessWidget {
   const BannerLStyle1({
     super.key,
-    this.image = "https://i.imgur.com/wpl37Kz.png",
+    this.image =
+        "https://i.pinimg.com/474x/31/e7/68/31e7683b3e49987c5f818bade1febd4c.jpg", // Updated image URL
     required this.title,
     required this.press,
     this.subtitle,
@@ -16,7 +16,6 @@ class BannerLStyle1 extends StatelessWidget {
   final String title;
   final String? subtitle;
   final int discountPercent;
-
   final VoidCallback press;
 
   @override

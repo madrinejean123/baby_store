@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_svg/svg.dart';
 import 'package:shop/constants.dart';
-
 import 'banner_s.dart';
 
 class BannerSStyle5 extends StatelessWidget {
   const BannerSStyle5({
     super.key,
-    this.image = "https://i.imgur.com/wQ0sNHT.png",
+    this.image =
+        "https://i.pinimg.com/236x/70/e2/f4/70e2f4a8fcb8799045c5cba2c765513b.jpg", // Updated image URL
     required this.title,
     required this.press,
     this.subtitle,
@@ -17,7 +16,6 @@ class BannerSStyle5 extends StatelessWidget {
   final String? image;
   final String title;
   final String? subtitle, bottomText;
-
   final VoidCallback press;
 
   @override
@@ -62,7 +60,6 @@ class BannerSStyle5 extends StatelessWidget {
                         height: 1,
                       ),
                     ),
-                    // const SizedBox(height: defaultPadding / 4),
                     if (bottomText != null)
                       Text(
                         bottomText!,
@@ -72,7 +69,7 @@ class BannerSStyle5 extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),

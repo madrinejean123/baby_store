@@ -1,200 +1,228 @@
-import 'dart:convert'; // Import for JSON handling
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class OnsaleScreen extends StatelessWidget {
-  const OnsaleScreen({super.key});
+class OnSaleScreen extends StatefulWidget {
+  const OnSaleScreen({super.key});
+
+  @override
+  _OnSaleScreenState createState() => _OnSaleScreenState();
+}
+
+class _OnSaleScreenState extends State<OnSaleScreen> {
+  int cartCount = 0;
+  String searchQuery = '';
+
+  static List<Map<String, dynamic>> onSaleItems = [
+    {
+      'name': 'Baby Blanket',
+      'price': 50000,
+      'discount': 10,
+      'image':
+          'https://i.pinimg.com/236x/42/8e/a2/428ea263383400216cb3bf7fdb6e08e9.jpg'
+    },
+    {
+      'name': 'Baby Wardrobe',
+      'price': 80000,
+      'discount': 15,
+      'image':
+          'https://i.pinimg.com/236x/2d/8c/13/2d8c13e157390378118d1849f49b5d8f.jpg'
+    },
+    {
+      'name': 'Baby Bed',
+      'price': 150000,
+      'discount': 20,
+      'image':
+          'https://i.pinimg.com/236x/43/33/26/433326a4c808e947d7bd3e8c91aa93ca.jpg'
+    },
+    {
+      'name': 'Baby Carrier',
+      'price': 60000,
+      'discount': 5,
+      'image':
+          'https://i.pinimg.com/236x/3a/08/db/3a08dbf37a54d9b59589bc853e8fbe2f.jpg'
+    },
+    {
+      'name': 'Night Light',
+      'price': 30000,
+      'discount': 10,
+      'image':
+          'https://i.pinimg.com/236x/a5/5b/89/a55b8938e959ba03e7be1697094c0738.jpg'
+    },
+    {
+      'name': 'Baby Cosmetics',
+      'price': 45000,
+      'discount': 12,
+      'image':
+          'https://i.pinimg.com/736x/1e/a4/f6/1ea4f6173518574c5d57ee6e6bcac57e.jpg'
+    },
+    {
+      'name': 'Feeding Chair',
+      'price': 70000,
+      'discount': 18,
+      'image':
+          'https://i.pinimg.com/736x/36/54/7a/36547a9e2fa3c837d85f90c287d88043.jpg'
+    },
+    {
+      'name': 'Baby Mat',
+      'price': 40000,
+      'discount': 5,
+      'image':
+          'https://i.pinimg.com/236x/4e/3f/ef/4e3fef87c0ee8d89e43c2d0cdd96cf6f.jpg'
+    },
+    {
+      'name': 'Baby Overalls',
+      'price': 55000,
+      'discount': 10,
+      'image':
+          'https://i.pinimg.com/736x/ec/3e/4c/ec3e4c375c7f9ca9083ce98ca673c91a.jpg'
+    },
+    {
+      'name': 'Baby Pants',
+      'price': 30000,
+      'discount': 15,
+      'image':
+          'https://i.pinimg.com/236x/39/e5/bc/39e5bca90758831e76d1d22f6474adf0.jpg'
+    },
+    {
+      'name': 'Baby Shirts',
+      'price': 35000,
+      'discount': 10,
+      'image':
+          'https://i.pinimg.com/236x/ed/3c/fa/ed3cfa19b567404073b9c1115fbedbbb.jpg'
+    },
+    {
+      'name': 'Baby Dresses',
+      'price': 70000,
+      'discount': 20,
+      'image':
+          'https://i.pinimg.com/736x/44/38/54/4438548726f756aafcbcc01cf9ff365e.jpg'
+    },
+  ];
+
+  List<Map<String, dynamic>> getFilteredItems() {
+    return onSaleItems
+        .where((item) =>
+            item['name'].toLowerCase().contains(searchQuery.toLowerCase()))
+        .toList();
+  }
+
+  void addToCart() {
+    setState(() {
+      cartCount++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Baby Bedroom Essentials'),
-      ),
-      body: BabyBedroomItems(),
-    );
-  }
-}
-
-class BabyBedroomItems extends StatefulWidget {
-  const BabyBedroomItems({super.key});
-
-  @override
-  _BabyBedroomItemsState createState() => _BabyBedroomItemsState();
-}
-
-class _BabyBedroomItemsState extends State<BabyBedroomItems> {
-  List<BabyItem> items = [
-    BabyItem(
-        name: 'Baby Crib',
-        price: 150.00,
-        image: 'assets/crib.png',
-        description: 'Comfortable baby crib for your newborn.'),
-    BabyItem(
-        name: 'Changing Table',
-        price: 80.00,
-        image: 'assets/changing_table.png',
-        description: 'A safe changing table for babies.'),
-    BabyItem(
-        name: 'Baby Mattress',
-        price: 120.00,
-        image: 'assets/mattress.png',
-        description: 'High-quality mattress for your baby\'s crib.'),
-    BabyItem(
-        name: 'Baby Monitor',
-        price: 60.00,
-        image: 'assets/monitor.png',
-        description: 'Monitor your baby from any room with ease.'),
-    BabyItem(
-        name: 'Rocking Chair',
-        price: 100.00,
-        image: 'assets/rocking_chair.png',
-        description: 'A comfortable chair for you to rock your baby.'),
-    BabyItem(
-        name: 'Night Light',
-        price: 20.00,
-        image: 'assets/night_light.png',
-        description: 'Gentle night light for your baby\'s room.'),
-  ];
-
-  List<BabyItem> cart = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadCart();
-  }
-
-  void addToCart(BabyItem item) {
-    setState(() {
-      cart.add(item);
-    });
-    _saveCart();
-  }
-
-  void _loadCart() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? cartJson = prefs.getString('cart');
-    if (cartJson != null) {
-      List<dynamic> cartData = jsonDecode(cartJson);
-      setState(() {
-        cart = cartData
-            .map((item) => BabyItem.fromJson(jsonEncode(item)))
-            .toList();
-      });
-    }
-  }
-
-  void _saveCart() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String> cartJsonList = cart.map((item) => item.toJson()).toList();
-    prefs.setString('cart', jsonEncode(cartJsonList));
-  }
-
-  double getTotalPrice() {
-    double total = 0.0;
-    for (var item in cart) {
-      total += item.price;
-    }
-    return total;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(items[index].name),
-                subtitle: Text('\$${items[index].price.toStringAsFixed(2)}'),
-                leading: Image.asset(items[index].image, width: 50, height: 50),
-                trailing: IconButton(
-                  icon: Icon(Icons.add_shopping_cart),
-                  onPressed: () => addToCart(items[index]),
-                ),
-              );
-            },
+        title: const Text('On Sale – Baby Deals You’ll Love!'),
+        backgroundColor: Colors.tealAccent.shade100,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () => Navigator.pop(context),
           ),
-        ),
-        Divider(),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+          Stack(
             children: [
-              Text(
-                'Cart',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {},
               ),
-              SizedBox(height: 10),
-              ...cart.map((item) {
-                return ListTile(
-                  title: Text(item.name),
-                  subtitle: Text('\$${item.price.toStringAsFixed(2)}'),
-                );
-              }),
-              Divider(),
-              Text(
-                'Total: \$${getTotalPrice().toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (cart.isNotEmpty) {
-                    // Simulate a checkout action
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Checkout completed!')),
-                    );
-                    setState(() {
-                      cart.clear(); // Clear cart after checkout
-                    });
-                    _saveCart(); // Save the empty cart state
-                  }
-                },
-                child: Text('Checkout'),
-              ),
+              if (cartCount > 0)
+                Positioned(
+                  right: 0,
+                  child: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.red,
+                    child: Text(
+                      '$cartCount',
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                  ),
+                ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: 'Search Products',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.65,
+                ),
+                itemCount: getFilteredItems().length,
+                itemBuilder: (context, index) {
+                  final item = getFilteredItems()[index];
+                  final discountedPrice =
+                      item['price'] * (1 - item['discount'] / 100);
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    elevation: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child:
+                                Image.network(item['image'], fit: BoxFit.cover),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(item['name'],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                              Text('UGX ${discountedPrice.toStringAsFixed(0)}',
+                                  style: const TextStyle(color: Colors.teal)),
+                              Text('Was: UGX ${item['price']}',
+                                  style: const TextStyle(
+                                      decoration: TextDecoration.lineThrough)),
+                              const SizedBox(height: 5),
+                              ElevatedButton(
+                                onPressed: addToCart,
+                                child: const Text('Add to Cart'),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.tealAccent),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class BabyItem {
-  final String name;
-  final double price;
-  final String image;
-  final String description;
-
-  BabyItem({
-    required this.name,
-    required this.price,
-    required this.image,
-    required this.description,
-  });
-
-  // Convert BabyItem to JSON
-  String toJson() {
-    return jsonEncode({
-      'name': name,
-      'price': price,
-      'image': image,
-      'description': description,
-    });
-  }
-
-  // Convert JSON to BabyItem
-  factory BabyItem.fromJson(String jsonString) {
-    final Map<String, dynamic> data = jsonDecode(jsonString);
-    return BabyItem(
-      name: data['name'],
-      price: data['price'],
-      image: data['image'],
-      description: data['description'],
-    );
-  }
-}
+void main() => runApp(const MaterialApp(home: OnSaleScreen()));

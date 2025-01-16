@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-
-import 'package:shop/components/Banner/L/banner_l.dart';
+import 'package:shop/route/components/Banner/L/banner_l.dart';
 
 import '../../../constants.dart';
 
 class BannerLStyle1 extends StatelessWidget {
   const BannerLStyle1({
     super.key,
-    this.image = "https://i.imgur.com/wpl37Kz.png",
+    this.image =
+        "https://i.pinimg.com/736x/da/6c/bc/da6cbcf01ea308ddefbbb8b8d454dfef.jpg", // Replaced with the new baby-related image URL
     required this.title,
     required this.press,
     this.subtitle,
@@ -34,7 +34,8 @@ class BannerLStyle1 extends StatelessWidget {
               const Spacer(),
               DefaultTextStyle(
                 style: const TextStyle(
-                  fontFamily: grandisExtendedFont,
+                  fontFamily:
+                      "YourBabyFriendlyFont", // Replace with your baby-friendly font
                   fontSize: 60,
                   height: 1.2,
                   fontWeight: FontWeight.bold,
@@ -95,7 +96,8 @@ class BannerLStyle1 extends StatelessWidget {
                 title.toUpperCase(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontFamily: grandisExtendedFont,
+                  fontFamily:
+                      "YourBabyFriendlyFont", // Replace with your baby-friendly font
                   fontSize: 31,
                   fontWeight: FontWeight.w900,
                   color: Colors.white,
@@ -104,9 +106,10 @@ class BannerLStyle1 extends StatelessWidget {
               ),
               const Spacer(),
               const Text(
-                "Shop now  >",
+                "Shop Baby Essentials Now  >",
                 style: TextStyle(
-                  fontFamily: grandisExtendedFont,
+                  fontFamily:
+                      "YourBabyFriendlyFont", // Replace with your baby-friendly font
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                   color: Colors.white,

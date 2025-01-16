@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_svg/svg.dart';
 import 'package:shop/constants.dart';
 
@@ -8,7 +7,8 @@ import 'banner_m.dart';
 class BannerMStyle3 extends StatelessWidget {
   const BannerMStyle3({
     super.key,
-    this.image = "https://i.imgur.com/8REExBV.png",
+    this.image =
+        "https://i.pinimg.com/736x/12/bf/b9/12bfb9d75b898a312d22c860f8a65779.jpg",
     required this.title,
     required this.press,
     required this.discountParcent,

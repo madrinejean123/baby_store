@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/constants.dart';
 
 import 'banner_s.dart';
@@ -8,7 +8,8 @@ import 'banner_s.dart';
 class BannerSStyle5 extends StatelessWidget {
   const BannerSStyle5({
     super.key,
-    this.image = "https://i.imgur.com/wQ0sNHT.png",
+    this.image =
+        "https://i.pinimg.com/236x/6c/4f/52/6c4f52289acedafdaed6e096a4f38e71.jpg", // Updated image URL
     required this.title,
     required this.press,
     this.subtitle,

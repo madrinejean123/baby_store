@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:shop/components/Banner/L/banner_l.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/route/components/Banner/L/banner_l.dart';
 
 class BannerLStyle1 extends StatelessWidget {
   const BannerLStyle1({
     super.key,
-    this.image = "https://i.imgur.com/wpl37Kz.png",
+    this.image =
+        "https://i.pinimg.com/474x/d3/dd/73/d3dd73752a90c3b8c6c7385fcb884042.jpg", // Replaced with the new image URL
     required this.title,
     required this.press,
     this.subtitle,

@@ -17,15 +17,15 @@ class CategoryModel {
 }
 
 List<CategoryModel> demoCategories = [
-  CategoryModel(name: "All Categories"),
+  CategoryModel(name: "All Baby Items"),
   CategoryModel(
       name: "On Sale",
       svgSrc: "assets/icons/Sale.svg",
       route: onSaleScreenRoute),
-  CategoryModel(name: "Baby_clothes", svgSrc: "assets/icons/Man.svg"),
-  CategoryModel(name: "bedroom_essentials", svgSrc: "assets/icons/Woman.svg"),
+  CategoryModel(name: "Baby Clothes", svgSrc: "assets/icons/Man.svg"),
+  CategoryModel(name: "Bedroom Essentials", svgSrc: "assets/icons/Woman.svg"),
   CategoryModel(
-      name: "baby_furniture",
+      name: "Baby Furniture",
       svgSrc: "assets/images/image.png",
       route: kidsScreenRoute),
 ];

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_svg/svg.dart';
 import 'package:shop/constants.dart';
-
 import 'banner_m.dart';
 
 class BannerMStyle4 extends StatelessWidget {
   const BannerMStyle4({
     super.key,
-    this.image = "https://i.imgur.com/R4iKkDD.png",
+    this.image =
+        "https://i.pinimg.com/736x/df/c6/50/dfc650bad3ee1da9c73d7184eea7173d.jpg",
     required this.title,
     required this.press,
     required this.discountParcent,
@@ -62,7 +61,6 @@ class BannerMStyle4 extends StatelessWidget {
                         height: 1,
                       ),
                     ),
-                    // const SizedBox(height: defaultPadding / 4),
                     Text(
                       "UP TO $discountParcent% OFF",
                       style: const TextStyle(

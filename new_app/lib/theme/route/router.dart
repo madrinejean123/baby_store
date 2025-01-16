@@ -165,7 +165,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case onSaleScreenRoute:
       return MaterialPageRoute(
-        builder: (context) => const OnsaleScreen(),
+        builder: (context) => const OnSaleScreen(),
       );
 
     case kidsScreenRoute:
