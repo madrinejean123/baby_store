@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/route/route_constants.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'components/login_form.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +13,33 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfUserIsLoggedIn();
+  }
+
+  void _checkIfUserIsLoggedIn() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, entryPointScreenRoute, (route) => false);
+    }
+  }
+
+  Future<void> _signInWithEmailPassword() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        // Implement your sign-in logic here
+        Navigator.pushNamedAndRemoveUntil(context, entryPointScreenRoute,
+            ModalRoute.withName(logInScreenRoute));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e")),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: defaultPadding / 2),
                   const Text(
-                    "Log in with your data that you intered during your registration.",
+                    "Log in with your data that you entered during your registration.",
                   ),
                   const SizedBox(height: defaultPadding),
                   LogInForm(formKey: _formKey),
@@ -51,19 +78,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height > 700
-                        ? size.height * 0.1
-                        : defaultPadding,
+                    height:
+                        size.height > 700 ? size.height * 0.1 : defaultPadding,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context,
-                            entryPointScreenRoute,
-                            ModalRoute.withName(logInScreenRoute));
-                      }
-                    },
+                    onPressed: _signInWithEmailPassword,
                     child: const Text("Log in"),
                   ),
                   Row(

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/screens/auth/views/components/sign_up_form.dart';
 import 'package:shop/route/route_constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -13,6 +15,30 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+      await _auth.signInWithCredential(credential);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Signed in as: ${_auth.currentUser?.displayName}')),
+      );
+      Navigator.pushNamed(context, entryPointScreenRoute);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error signing in: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +103,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: defaultPadding * 2),
                   ElevatedButton(
                     onPressed: () {
-                      // There is 2 more screens while user complete their profile
-                      // afre sign up, it's available on the pro version get it now
-                      // 🔗 https://theflutterway.gumroad.com/l/fluttershop
                       Navigator.pushNamed(context, entryPointScreenRoute);
                     },
                     child: const Text("Continue"),
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  ElevatedButton.icon(
+                    onPressed: _signInWithGoogle,
+                    icon: Icon(Icons.login),
+                    label: const Text("Sign in with Google"),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
