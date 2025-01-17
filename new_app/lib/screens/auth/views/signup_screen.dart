@@ -1,6 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:shop/screens/auth/views/components/sign_up_form.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_icons/flutter_icons.dart'; // Import the flutter_icons package
 import 'package:shop/route/route_constants.dart';
 
 import '../../../constants.dart';
@@ -13,7 +13,18 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _formKey = GlobalKey<FormState>();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  // Google Sign-In method
+  Future<void> _signInWithGoogle() async {
+    try {
+      await _googleSignIn.signIn();
+      if (!mounted) return;
+      Navigator.pushNamed(context, entryPointScreenRoute);
+    } catch (e) {
+      print("Google sign-in error: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,57 +49,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: defaultPadding / 2),
                   const Text(
-                    "Please enter your valid data in order to create an account.",
-                  ),
-                  const SizedBox(height: defaultPadding),
-                  SignUpForm(formKey: _formKey),
-                  const SizedBox(height: defaultPadding),
-                  Row(
-                    children: [
-                      Checkbox(
-                        onChanged: (value) {},
-                        value: false,
-                      ),
-                      Expanded(
-                        child: Text.rich(
-                          TextSpan(
-                            text: "I agree with the",
-                            children: [
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pushNamed(
-                                        context, termsOfServicesScreenRoute);
-                                  },
-                                text: " Terms of service ",
-                                style: const TextStyle(
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: "& privacy policy.",
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
+                    "Please sign up using your Google account.",
                   ),
                   const SizedBox(height: defaultPadding * 2),
-                  ElevatedButton(
-                    onPressed: () {
-                      // There is 2 more screens while user complete their profile
-                      // afre sign up, it's available on the pro version get it now
-                      // 🔗 https://theflutterway.gumroad.com/l/fluttershop
-                      Navigator.pushNamed(context, entryPointScreenRoute);
-                    },
-                    child: const Text("Continue"),
+                  // Google Sign Up Button with Google icon from flutter_icons
+                  ElevatedButton.icon(
+                    onPressed: _signInWithGoogle,
+                    icon: const Icon(
+                        FlutterIcons.google_ant), // Using Google icon
+                    label: const Text("Sign Up with Google"),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
                   ),
+                  const SizedBox(height: defaultPadding),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Do you have an account?"),
+                      const Text("Already have an account?"),
                       TextButton(
                         onPressed: () {
                           Navigator.pushNamed(context, logInScreenRoute);
@@ -99,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
