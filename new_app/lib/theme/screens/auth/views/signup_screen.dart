@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/screens/auth/views/components/sign_up_form.dart';
@@ -18,6 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  // Method for signing in with Google
   Future<void> _signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -46,8 +46,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset(
-              "assets/images/signUp_dark.png",
+            Image.network(
+              "https://i.pinimg.com/736x/f6/3f/a7/f63fa7c9e89398bfb15aabb9de4fdaa8.jpg",
               height: MediaQuery.of(context).size.height * 0.35,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -67,53 +67,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: defaultPadding),
                   SignUpForm(formKey: _formKey),
-                  const SizedBox(height: defaultPadding),
-                  Row(
-                    children: [
-                      Checkbox(
-                        onChanged: (value) {},
-                        value: false,
-                      ),
-                      Expanded(
-                        child: Text.rich(
-                          TextSpan(
-                            text: "I agree with the",
-                            children: [
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.pushNamed(
-                                        context, termsOfServicesScreenRoute);
-                                  },
-                                text: " Terms of service ",
-                                style: const TextStyle(
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: "& privacy policy.",
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
                   const SizedBox(height: defaultPadding * 2),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, entryPointScreenRoute);
-                    },
-                    child: const Text("Continue"),
-                  ),
-                  const SizedBox(height: defaultPadding),
                   ElevatedButton.icon(
                     onPressed: _signInWithGoogle,
-                    icon: Icon(Icons.login),
+                    icon: Icon(Icons.g_mobiledata),
                     label: const Text("Sign in with Google"),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent),
+                        backgroundColor: Colors.lightBlue,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 16)),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

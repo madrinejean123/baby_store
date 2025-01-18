@@ -13,6 +13,17 @@ class BabyFurnitureItem {
   });
 }
 
+// Cart data model to hold items in the cart
+class CartItem {
+  final BabyFurnitureItem item;
+  final int quantity;
+
+  CartItem({
+    required this.item,
+    required this.quantity,
+  });
+}
+
 class KidsScreen extends StatefulWidget {
   const KidsScreen({super.key});
 
@@ -62,11 +73,24 @@ class _KidsScreenState extends State<KidsScreen> {
         price: 300000),
   ];
 
-  int cartCount = 0;
+  // List to hold items in the cart
+  List<CartItem> cartItems = [];
 
-  void addToCart() {
+  void addToCart(BabyFurnitureItem item) {
     setState(() {
-      cartCount++;
+      // Check if the item is already in the cart
+      final existingItemIndex =
+          cartItems.indexWhere((cartItem) => cartItem.item == item);
+      if (existingItemIndex != -1) {
+        // If item is already in the cart, increment its quantity
+        cartItems[existingItemIndex] = CartItem(
+          item: item,
+          quantity: cartItems[existingItemIndex].quantity + 1,
+        );
+      } else {
+        // Add new item to cart with quantity 1
+        cartItems.add(CartItem(item: item, quantity: 1));
+      }
     });
   }
 
@@ -86,9 +110,11 @@ class _KidsScreenState extends State<KidsScreen> {
             children: [
               IconButton(
                 icon: const Icon(Icons.shopping_cart),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/cart', arguments: cartItems);
+                },
               ),
-              if (cartCount > 0)
+              if (cartItems.isNotEmpty)
                 Positioned(
                   right: 8,
                   top: 8,
@@ -96,7 +122,7 @@ class _KidsScreenState extends State<KidsScreen> {
                     radius: 10,
                     backgroundColor: Colors.red,
                     child: Text(
-                      '$cartCount',
+                      '${cartItems.length}',
                       style: const TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
@@ -185,7 +211,7 @@ class _KidsScreenState extends State<KidsScreen> {
                     Text(
                         "UGX ${furnitureItems[index].price.toStringAsFixed(0)}"),
                     ElevatedButton(
-                      onPressed: addToCart,
+                      onPressed: () => addToCart(furnitureItems[index]),
                       child: const Text("Add to Cart"),
                     ),
                   ],

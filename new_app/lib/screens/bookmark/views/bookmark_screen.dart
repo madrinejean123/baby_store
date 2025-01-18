@@ -28,19 +28,19 @@ class BookmarkScreen extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return ProductCard(
-                    image: demoPopularProducts[index].image,
-                    brandName: demoPopularProducts[index].brandName,
-                    title: demoPopularProducts[index].title,
-                    price: demoPopularProducts[index].price,
-                    priceAfetDiscount:
-                        demoPopularProducts[index].priceAfetDiscount,
-                    dicountpercent: demoPopularProducts[index].dicountpercent,
+                    image:
+                        kidsProducts[index].image, // Changed to kids products
+                    brandName: kidsProducts[index].brandName,
+                    title: kidsProducts[index].title,
+                    price: kidsProducts[index].price,
+                    priceAfetDiscount: kidsProducts[index].priceAfetDiscount,
+                    dicountpercent: kidsProducts[index].dicountpercent,
                     press: () {
                       Navigator.pushNamed(context, productDetailsScreenRoute);
                     },
                   );
                 },
-                childCount: demoPopularProducts.length,
+                childCount: kidsProducts.length, // Display kids products
               ),
             ),
           ),
