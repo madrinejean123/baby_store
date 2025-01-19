@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop/models/product_model.dart';
 import 'package:shop/constants.dart';
+import 'package:shop/screens/kids/views/kids_screen.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -10,31 +10,44 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  // Sample list of cart items (should be replaced with real cart data)
-  List<ProductModel> cartItems = [
-    ProductModel(
-      image: "https://i.pinimg.com/tXyOMMG.png", // Example product image
-      title: "Baby Mat",
-      brandName: "BabyCo",
-      price: 50.00,
-      priceAfetDiscount: 45.00,
-      dicountpercent: 10,
-    ),
-    ProductModel(
-      image: "https://i.pinimg.com/h2LqppX.png", // Example product image
-      title: "Baby Blanket",
-      brandName: "SnuggleBaby",
-      price: 35.00,
-    ),
-  ];
+  late List<CartItemModel> cartItems;
 
-  // Calculate total price
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)?.settings.arguments as List<CartItemModel>;
+    setState(() {
+      cartItems = args;
+    });
+  }
+
   double calculateTotal() {
     double total = 0.0;
     for (var item in cartItems) {
-      total += item.priceAfetDiscount ?? item.price;
+      total += item.item.price * item.quantity;
     }
     return total;
+  }
+
+  void removeItem(int index) {
+    setState(() {
+      cartItems.removeAt(index);
+    });
+  }
+
+  void updateQuantity(int index, bool increase) {
+    setState(() {
+      if (increase) {
+        cartItems[index].quantity++;
+      } else {
+        if (cartItems[index].quantity > 1) {
+          cartItems[index].quantity--;
+        } else {
+          removeItem(index);
+        }
+      }
+    });
   }
 
   @override
@@ -44,10 +57,34 @@ class _CartScreenState extends State<CartScreen> {
         title: const Text('Your Cart'),
       ),
       body: cartItems.isEmpty
-          ? Center(child: Text('Your cart is empty!'))
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Your cart is empty!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const KidsScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text('Continue Shopping'),
+                  ),
+                ],
+              ),
+            )
           : Column(
               children: [
-                // Display list of items in the cart
                 Expanded(
                   child: ListView.builder(
                     itemCount: cartItems.length,
@@ -55,41 +92,54 @@ class _CartScreenState extends State<CartScreen> {
                       var product = cartItems[index];
                       return ListTile(
                         contentPadding: const EdgeInsets.all(defaultPadding),
-                        leading: Image.network(product.image),
-                        title: Text(product.title),
-                        subtitle: Text(product.brandName),
-                        trailing: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        leading: Image.asset(product.item.image),
+                        title: Text(product.item.name),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.remove_circle_outline),
+                                  onPressed: () => updateQuantity(index, false),
+                                ),
+                                Text('${product.quantity}'),
+                                IconButton(
+                                  icon: Icon(Icons.add_circle_outline),
+                                  onPressed: () => updateQuantity(index, true),
+                                ),
+                              ],
+                            ),
                             Text(
-                              '\$${product.priceAfetDiscount ?? product.price}',
+                              'UGX ${product.item.price * product.quantity}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.green,
                               ),
                             ),
-                            if (product.dicountpercent != null)
-                              Text(
-                                '${product.dicountpercent}% Off',
-                                style: TextStyle(color: Colors.red),
-                              ),
                           ],
                         ),
-                        onTap: () {
-                          // Navigate to product details or allow removal
-                          // For now, just a placeholder
-                        },
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () => removeItem(index),
+                        ),
                       );
                     },
                   ),
                 ),
-                // Display total and checkout button
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Column(
                     children: [
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Enter Promo Code',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                       Text(
-                        'Total: \$${calculateTotal().toStringAsFixed(2)}',
+                        'Total: UGX ${calculateTotal().toStringAsFixed(0)}',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -109,4 +159,20 @@ class _CartScreenState extends State<CartScreen> {
             ),
     );
   }
+}
+
+class CartItemModel {
+  // Renamed from CartItem to CartItemModel
+  final Item item;
+  int quantity;
+
+  CartItemModel({required this.item, required this.quantity});
+}
+
+class Item {
+  final String name;
+  final String image;
+  final double price;
+
+  Item({required this.name, required this.image, required this.price});
 }
