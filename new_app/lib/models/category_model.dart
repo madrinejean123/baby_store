@@ -12,48 +12,55 @@ class CategoryModel {
 }
 
 final List<CategoryModel> demoCategoriesWithImage = [
-  CategoryModel(title: "Woman’s", image: "https://i.imgur.com/5M89G2P.png"),
-  CategoryModel(title: "Man’s", image: "https://i.imgur.com/UM3GdWg.png"),
-  CategoryModel(title: "Kid’s", image: "https://i.imgur.com/Lp0D6k5.png"),
-  CategoryModel(title: "Accessories", image: "https://i.imgur.com/3mSE5sN.png"),
+  CategoryModel(
+      title: "Baby Clothing", image: "assets/images/baby_clothing.png"),
+  CategoryModel(title: "Baby Toys", image: "assets/images/baby_toys.png"),
+  CategoryModel(
+      title: "Baby Furniture", image: "assets/images/baby_furniture.png"),
+  CategoryModel(
+      title: "Baby Accessories", image: "assets/images/baby_accessories.png"),
 ];
 
 final List<CategoryModel> demoCategories = [
   CategoryModel(
-    title: "On sale",
-    svgSrc: "assets/icons/Sale.svg",
+    title: "On Sale",
+    svgSrc: "assets/icons/sale.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
-      CategoryModel(title: "Dresses"),
-      CategoryModel(title: "Jeans"),
+      CategoryModel(title: "Baby Clothes"),
+      CategoryModel(title: "Baby Shoes"),
+      CategoryModel(title: "Baby Toys"),
+      CategoryModel(title: "Baby Furniture"),
+      CategoryModel(title: "Baby Accessories"),
     ],
   ),
   CategoryModel(
-    title: "Man’s & Woman’s",
-    svgSrc: "assets/icons/Man&Woman.svg",
+    title: "Clothing & Accessories",
+    svgSrc: "assets/icons/clothing.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
+      CategoryModel(title: "Baby Onesies"),
+      CategoryModel(title: "Baby Dresses"),
+      CategoryModel(title: "Baby Sweaters"),
+      CategoryModel(title: "Baby Shoes"),
     ],
   ),
   CategoryModel(
-    title: "Kids",
-    svgSrc: "assets/icons/Child.svg",
+    title: "Furniture & Bedding",
+    svgSrc: "assets/icons/furniture.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
-      CategoryModel(title: "Coats & Jackets"),
+      CategoryModel(title: "Baby Cribs"),
+      CategoryModel(title: "Baby Mattresses"),
+      CategoryModel(title: "Baby Wardrobes"),
+      CategoryModel(title: "Baby Blankets"),
     ],
   ),
   CategoryModel(
-    title: "Accessories",
-    svgSrc: "assets/icons/Accessories.svg",
+    title: "Toys",
+    svgSrc: "assets/icons/toys.svg",
     subCategories: [
-      CategoryModel(title: "All Clothing"),
-      CategoryModel(title: "New In"),
+      CategoryModel(title: "Soft Toys"),
+      CategoryModel(title: "Activity Toys"),
+      CategoryModel(title: "Musical Toys"),
+      CategoryModel(title: "Educational Toys"),
     ],
   ),
 ];

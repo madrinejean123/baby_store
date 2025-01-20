@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:shop/components/buy_full_ui_kit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop/components/cart_button.dart';
 import 'package:shop/components/custom_modal_bottom_sheet.dart';
 import 'package:shop/components/product/product_card.dart';
 import 'package:shop/constants.dart';
 import 'package:shop/screens/product/views/product_returns_screen.dart';
-
 import 'package:shop/route/screen_export.dart';
 
 import 'components/notify_me_card.dart';
@@ -16,17 +14,40 @@ import 'components/product_list_tile.dart';
 import '../../../components/review_card.dart';
 import 'product_buy_now_screen.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key, this.isProductAvailable = true});
+// Define a Product class for the selected product
+class Product {
+  final String title;
+  final String brand;
+  final String description;
+  final double price;
+  final List<String> images;
+  final bool isAvailable;
+  final double rating;
+  final int numOfReviews;
 
-  final bool isProductAvailable;
+  Product({
+    required this.title,
+    required this.brand,
+    required this.description,
+    required this.price,
+    required this.images,
+    required this.isAvailable,
+    required this.rating,
+    required this.numOfReviews,
+  });
+}
+
+class ProductDetailsScreen extends StatelessWidget {
+  final Product product;
+
+  const ProductDetailsScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: isProductAvailable
+      bottomNavigationBar: product.isAvailable
           ? CartButton(
-              price: 140,
+              price: product.price,
               press: () {
                 customModalBottomSheet(
                   context,
@@ -35,10 +56,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 );
               },
             )
-          :
-
-          /// If profuct is not available then show [NotifyMeCard]
-          NotifyMeCard(
+          : NotifyMeCard(
               isNotify: false,
               onChanged: (value) {},
             ),
@@ -51,22 +69,21 @@ class ProductDetailsScreen extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () {},
-                  icon: SvgPicture.asset("assets/icons/Bookmark.svg",
-                      color: Theme.of(context).textTheme.bodyLarge!.color),
+                  icon: SvgPicture.asset(
+                    "assets/icons/Bookmark.svg",
+                    color: Theme.of(context).textTheme.bodyLarge!.color,
+                  ),
                 ),
               ],
             ),
-            const ProductImages(
-              images: [productDemoImg1, productDemoImg2, productDemoImg3],
-            ),
+            ProductImages(images: product.images),
             ProductInfo(
-              brand: "LIPSY LONDON",
-              title: "Sleeveless Ruffle",
-              isAvailable: isProductAvailable,
-              description:
-                  "A cool gray cap in soft corduroy. Watch me.' By buying cotton products from Lindex, you’re supporting more responsibly...",
-              rating: 4.4,
-              numOfReviews: 126,
+              brand: product.brand,
+              title: product.title,
+              isAvailable: product.isAvailable,
+              description: product.description,
+              rating: product.rating,
+              numOfReviews: product.numOfReviews,
             ),
             ProductListTile(
               svgSrc: "assets/icons/Product.svg",
@@ -75,8 +92,8 @@ class ProductDetailsScreen extends StatelessWidget {
                 customModalBottomSheet(
                   context,
                   height: MediaQuery.of(context).size.height * 0.92,
-                  child: const BuyFullKit(
-                      images: ["assets/screens/Product detail.png"]),
+                  child: const Text(
+                      'Product Details Information'), // Replace with actual content
                 );
               },
             ),
@@ -87,9 +104,8 @@ class ProductDetailsScreen extends StatelessWidget {
                 customModalBottomSheet(
                   context,
                   height: MediaQuery.of(context).size.height * 0.92,
-                  child: const BuyFullKit(
-                    images: ["assets/screens/Shipping information.png"],
-                  ),
+                  child: const Text(
+                      'Shipping Information'), // Replace with actual content
                 );
               },
             ),
@@ -147,13 +163,20 @@ class ProductDetailsScreen extends StatelessWidget {
                         left: defaultPadding,
                         right: index == 4 ? defaultPadding : 0),
                     child: ProductCard(
-                      image: productDemoImg2,
-                      title: "Sleeveless Tiered Dobby Swing Dress",
-                      brandName: "LIPSY LONDON",
-                      price: 24.65,
-                      priceAfetDiscount: index.isEven ? 20.99 : null,
-                      dicountpercent: index.isEven ? 25 : null,
-                      press: () {},
+                      image: product.images[index % product.images.length],
+                      title: product.title,
+                      brandName: product.brand,
+                      price: product.price,
+                      press: () {
+                        // Navigate to the selected product details page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProductDetailsScreen(product: product),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
