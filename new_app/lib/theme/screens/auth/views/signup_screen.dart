@@ -20,20 +20,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
   // Method for signing in with Google
   Future<void> _signInWithGoogle() async {
     try {
+      print("Google sign-in started");
+
+      // Trigger the Google Sign-In flow
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        // The user canceled the sign-in
+        print("User canceled sign-in");
+        return;
+      }
+      print("Google sign-in completed: ${googleUser.displayName}");
+
+      // Get the authentication details from the Google User
       final GoogleSignInAuthentication googleAuth =
-          await googleUser!.authentication;
+          await googleUser.authentication;
 
+      // Create a new credential for Firebase with the Google authentication tokens
       final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
+      // Sign in with the credential
+      print("Signing in with credentials...");
       await _auth.signInWithCredential(credential);
+
+      // Show a success message and navigate to the main screen
+      print("Signed in as: ${_auth.currentUser?.displayName}");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text('Signed in as: ${_auth.currentUser?.displayName}')),
       );
       Navigator.pushNamed(context, entryPointScreenRoute);
     } catch (e) {
+      // Show an error message if the sign-in fails
+      print("Error signing in: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error signing in: $e')),
       );
@@ -70,12 +91,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: defaultPadding * 2),
                   ElevatedButton.icon(
                     onPressed: _signInWithGoogle,
-                    icon: Icon(Icons.g_mobiledata),
+                    icon: const Icon(Icons.g_mobiledata),
                     label: const Text("Sign in with Google"),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.lightBlue,
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 16)),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16)),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +112,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
