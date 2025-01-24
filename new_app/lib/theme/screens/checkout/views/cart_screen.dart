@@ -15,11 +15,15 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final args =
-        ModalRoute.of(context)?.settings.arguments as List<CartItemModel>;
-    setState(() {
-      cartItems = args;
-    });
+    final args = ModalRoute.of(context)?.settings.arguments;
+
+    if (args != null && args is List<CartItemModel>) {
+      setState(() {
+        cartItems = args;
+      });
+    } else {
+      cartItems = []; // Default to an empty list if no arguments are passed
+    }
   }
 
   double calculateTotal() {
@@ -162,7 +166,6 @@ class _CartScreenState extends State<CartScreen> {
 }
 
 class CartItemModel {
-  // Renamed from CartItem to CartItemModel
   final Item item;
   int quantity;
 
