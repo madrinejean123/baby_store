@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Add the classpaths for Flutter and other plugins
+      classpath 'com.android.tools.build:gradle:8.2.1'  // Android Gradle plugin version
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21'  // Kotlin plugin version
+        
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
