@@ -1,15 +1,20 @@
 import 'package:device_preview/device_preview.dart';
-
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 import 'package:my_fashion_app/firebase/login.dart';
 import 'package:my_fashion_app/screens/product_list_screen.dart';
 
-void main() => runApp(
-      DevicePreview(
-        enabled: true,
-        builder: (context) => MyApp(),
-      ),
-    );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Initialize Firebase
+
+  runApp(
+    DevicePreview(
+      enabled: true,
+      builder: (context) => MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -68,7 +73,6 @@ class _MainScreen extends State<MainScreen>
 
   @override
   void dispose() {
-    // Dispose the animation controller
     _animationController.dispose();
     super.dispose();
   }

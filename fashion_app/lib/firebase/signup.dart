@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase
+import 'package:google_sign_in/google_sign_in.dart'; // Import Google SignIn
 import 'login.dart';
 
 class Signup extends StatefulWidget {
@@ -16,6 +18,39 @@ class _SignupState extends State<Signup> {
   String _confirmPassword = '';
   bool _obscureText = true;
   bool _obscureTextt = true;
+
+  // Google Sign-In method
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        // User canceled the login
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      // Navigate to another screen after successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } catch (e) {
+      print('Error signing in with Google: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Google Sign-In failed!')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -239,6 +274,25 @@ class _SignupState extends State<Signup> {
                       },
                     ),
                     SizedBox(height: 30),
+                    // Google Sign-In Button
+                    ElevatedButton.icon(
+                      onPressed: _signInWithGoogle,
+                      icon: Image.asset(
+                        'assets/google.png',
+                        height: 24.0,
+                      ),
+                      label: Text('Sign in with Google'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 16.0,
+                          horizontal: 50.0,
+                        ),
+                      ),
+                    ),
                     Center(
                       child: RichText(
                         textAlign: TextAlign.center,
